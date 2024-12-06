@@ -11,26 +11,6 @@ class ChallengesRepositoryImpl @Inject constructor(
 ) : ChallengesRepository {
 
     override suspend fun getChallenges(): ApiResult =
-        challengesApi.challengesApi().toModel()
-        /*
-        val list: MutableList<Challenge> = mutableListOf()
-        val query = ParseQuery.getQuery<ParseObject>("Desafio")
-        query.findInBackground { results: List<ParseObject>, e: ParseException? ->
-            if (e == null) {
-                for (result in results) {
-                    list.add(
-                        Challenge(
-                            title = result.objectId,
-                            category = "",
-                            amountFulfilled = 9,
-                            amountToBeFulfilled = 0,
-                            startDate = "",
-                            finishDate = ""
-                        )
-                    )
-                }
-            }
-        }
-        return ApiResult(list)*/
+        challengesApi.getChallengesApi().toModel()
 
 }
