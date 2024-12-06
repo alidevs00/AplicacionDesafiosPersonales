@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.dagger.hilt)
+    kotlin("kapt")
 }
 
 android {
@@ -40,7 +42,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -56,4 +57,28 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+
+    // Arrow
+    implementation(libs.arrow.core.v120)
+    implementation(libs.arrow.fx.coroutines.v120)
+    // Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    //Coil
+    implementation(libs.coil.compose)
+    //dagger hilt
+    implementation(libs.hilt.android.v244)
+    kapt(libs.hilt.android.compiler)
+    implementation(libs.androidx.hilt.navigation.compose.v110)
+    //parse
+    implementation(libs.parse)
+    //moshi
+    implementation(libs.moshi)
+    implementation(libs.logging.interceptor)
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+}
+
+kapt {
+    correctErrorTypes = true
 }
