@@ -31,15 +31,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val query = ParseQuery.getQuery<ParseObject>("Desafio")
-        query.findInBackground { results: List<ParseObject>, e: ParseException? ->
-            if (e == null) {
-                for (result in results) {
-                    result
-                }
-            }
-        }
-
         setContent {
             val lifecycleOwner = LocalLifecycleOwner.current.lifecycle
             LaunchedEffect(key1 = lifecycleOwner) {
@@ -72,7 +63,6 @@ fun GreetingPreview() {
     AplicacionDesafiosPersonalesTheme {
         Column {
             Text("Mis desafíos")
-
         }
     }
 }
