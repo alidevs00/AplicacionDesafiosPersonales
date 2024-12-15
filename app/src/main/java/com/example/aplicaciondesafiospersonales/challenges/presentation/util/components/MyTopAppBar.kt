@@ -1,4 +1,4 @@
-package com.example.aplicaciondesafiospersonales.challenges.presentation.util
+package com.example.aplicaciondesafiospersonales.challenges.presentation.util.components
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text

@@ -1,4 +1,4 @@
-package com.example.aplicaciondesafiospersonales.challenges.presentation.home_screen
+package com.example.aplicaciondesafiospersonales.challenges.presentation.screens.home_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

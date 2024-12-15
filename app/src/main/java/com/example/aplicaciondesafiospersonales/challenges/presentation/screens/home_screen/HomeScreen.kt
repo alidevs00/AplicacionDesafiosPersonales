@@ -1,4 +1,4 @@
-package com.example.aplicaciondesafiospersonales.challenges.presentation.home_screen
+package com.example.aplicaciondesafiospersonales.challenges.presentation.screens.home_screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,21 +13,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.aplicaciondesafiospersonales.challenges.presentation.util.ChallengeComponent
-import com.example.aplicaciondesafiospersonales.challenges.presentation.util.LoadingDialog
-import com.example.aplicaciondesafiospersonales.challenges.presentation.util.MyTopAppBar
+import androidx.navigation.NavHostController
+import com.example.aplicaciondesafiospersonales.challenges.presentation.util.components.AddNewChallengeComponent
+import com.example.aplicaciondesafiospersonales.challenges.presentation.util.components.ChallengeComponent
+import com.example.aplicaciondesafiospersonales.challenges.presentation.util.components.LoadingDialog
+import com.example.aplicaciondesafiospersonales.challenges.presentation.util.components.MyTopAppBar
 
 @Composable
 internal fun HomeScreen(
-    viewModel: HomeScreenViewModel = hiltViewModel()
+    viewModel: HomeScreenViewModel = hiltViewModel(),
+    navController: NavHostController
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
-    HomeScreenContent(state = state)
+    HomeScreenContent(state = state, navController = navController)
 }
 
 @Composable
 fun HomeScreenContent(
-    state: HomeScreenViewState
+    state: HomeScreenViewState,
+    navController: NavHostController
 ) {
     LoadingDialog(isLoading = state.isLoading)
     Scaffold(modifier = Modifier.fillMaxSize(),
@@ -41,8 +45,17 @@ fun HomeScreenContent(
             horizontalArrangement = Arrangement.spacedBy(10.dp),
             verticalItemSpacing = 10.dp
         ) {
-            items(state.challenges){challenge ->
-                ChallengeComponent(challenge.title,challenge.category)
+            items(state.challenges) { challenge ->
+                ChallengeComponent(
+                    title = challenge.title,
+                    category = challenge.category,
+                    onClick = { navController.navigate("view_challenge") }
+                )
+            }
+            item {
+                AddNewChallengeComponent(onClick = {
+                    navController.navigate("add_new_challenge")
+                })
             }
         }
     }

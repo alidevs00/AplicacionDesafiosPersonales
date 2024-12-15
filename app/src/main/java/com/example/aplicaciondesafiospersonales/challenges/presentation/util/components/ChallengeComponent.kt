@@ -1,6 +1,7 @@
-package com.example.aplicaciondesafiospersonales.challenges.presentation.util
+package com.example.aplicaciondesafiospersonales.challenges.presentation.util.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,10 +29,12 @@ class CategoryViewModel : ViewModel() {
 }
 
 @Composable
-fun ChallengeComponent(title: String, category: String) {
+fun ChallengeComponent(title: String, category: String, onClick: () -> Unit) {
     //selectCategory(category)
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .clickable(onClick = onClick),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -54,13 +57,13 @@ fun ChallengeComponent(title: String, category: String) {
 }
 
 @Composable
-fun AddNewChallengeComponent() {
-    ChallengeComponent("Añadir nuevo desafío", "Nuevo desafío")
+fun AddNewChallengeComponent(onClick: () -> Unit) {
+    ChallengeComponent("Añadir nuevo desafío", "Nuevo desafío", onClick)
 }
 
 @Composable
-fun ShowMoreChallengesComponent() {
-    ChallengeComponent("Mostrar más", "Mostrar mas")
+fun ShowMoreChallengesComponent(onClick: () -> Unit) {
+    ChallengeComponent("Mostrar más", "Mostrar mas", onClick)
 }
 
 
@@ -121,5 +124,7 @@ fun ShowMoreChallengesComponent() {
 @Preview(showBackground = true)
 @Composable
 fun ChallengeComponentPreview() {
-    ChallengeComponent("Leer 10 libros", "Mental")
+    ChallengeComponent("Leer 10 libros", "Mental", onClick = {// Acción simulada para la preview
+        println("Botón presionado en la preview")
+    })
 }
