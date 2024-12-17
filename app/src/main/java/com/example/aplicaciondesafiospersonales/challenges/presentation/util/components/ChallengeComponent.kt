@@ -5,32 +5,34 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
 import com.example.aplicaciondesafiospersonales.R
-
-class CategoryViewModel : ViewModel() {
-    var colorResourceCustom = 0
-    var painterResourceCustom = 0
-}
 
 @Composable
 fun ChallengeComponent(title: String, category: String, onClick: () -> Unit) {
-    //selectCategory(category)
+    val (backgroundColor, iconRes) = getCategoryAttributes(category)
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -42,19 +44,33 @@ fun ChallengeComponent(title: String, category: String, onClick: () -> Unit) {
             modifier = Modifier
                 .size(100.dp)
                 .clip(shape = RoundedCornerShape(15.dp, 15.dp, 15.dp, 15.dp))
-                .background(colorResource(R.color.fondo_lectura))
+                .background(backgroundColor)
         ) {
             Icon(
-                painter = painterResource(R.drawable.lectura),
+                painter = painterResource(iconRes),
                 contentDescription = stringResource(id = R.string.app_name),
                 modifier = Modifier
                     .size(60.dp)
                     .align(Alignment.Center)
             )
         }
-        Text(textAlign = TextAlign.Center, text = title)
+        Spacer(modifier = Modifier.size(5.dp))
+        Box(
+            modifier = Modifier
+                .width(100.dp)
+                .height(50.dp)
+        ) {
+            Text(
+                style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.Center,
+                text = title,
+                modifier = Modifier.fillMaxWidth(),
+                overflow = TextOverflow.Ellipsis
+            )
+        }
     }
 }
+
 
 @Composable
 fun AddNewChallengeComponent(onClick: () -> Unit) {
@@ -63,63 +79,24 @@ fun AddNewChallengeComponent(onClick: () -> Unit) {
 
 @Composable
 fun ShowMoreChallengesComponent(onClick: () -> Unit) {
-    ChallengeComponent("Mostrar más", "Mostrar mas", onClick)
+    ChallengeComponent("Mostrar más", "Mostrar más", onClick)
 }
 
-
-/*internal fun selectCategory(category: String) {
-    when (category) {
-        "Lectura" -> {
-            viewModel.colorResourceCustom = R.color.fondo_lectura
-            viewModel.painterResourceCustom = R.drawable.lectura
-        }
-
-        "Mental" -> {
-            viewModel.colorResourceCustom = R.color.fondo_mental
-            viewModel.painterResourceCustom = R.drawable.mental
-        }
-
-        "Ejercicio" -> {
-            viewModel.colorResourceCustom = R.color.fondo_ejercicio
-            viewModel.painterResourceCustom = R.drawable.ejercicio
-        }
-
-        "Cocina" -> {
-            viewModel.colorResourceCustom = R.color.fondo_cocina
-            viewModel.painterResourceCustom = R.drawable.cocina
-        }
-
-        "Social" -> {
-            viewModel.colorResourceCustom = R.color.fondo_social
-            viewModel.painterResourceCustom = R.drawable.social
-        }
-
-        "Personal" -> {
-            viewModel.colorResourceCustom = R.color.fondo_personal
-            viewModel.painterResourceCustom = R.drawable.personal
-        }
-
-        "Trabajo" -> {
-            viewModel.colorResourceCustom = R.color.fondo_trabajo
-            viewModel.painterResourceCustom = R.drawable.trabajo
-        }
-
-        "Estudio" -> {
-            viewModel.colorResourceCustom = R.color.fondo_estudio
-            viewModel.painterResourceCustom = R.drawable.estudio
-        }
-
-        "Nuevo desafío" -> {
-            viewModel.colorResourceCustom = R.color.fondo_gris
-            viewModel.painterResourceCustom = R.drawable.nuevo
-        }
-
-        "Mostrar mas" -> {
-            viewModel.colorResourceCustom = R.color.fondo_gris
-            viewModel.painterResourceCustom = R.drawable.mas
-        }
+@Composable
+fun getCategoryAttributes(category: String): Pair<Color, Int> {
+    return when (category) {
+        "Lectura" -> colorResource(id = R.color.fondo_lectura) to R.drawable.lectura
+        "Mental" -> colorResource(id = R.color.fondo_lectura) to R.drawable.mental
+        "Personal" -> colorResource(id = R.color.fondo_mental) to R.drawable.personal
+        "Cocina" -> colorResource(id = R.color.fondo_personal) to R.drawable.cocina
+        "Ejercicio" -> colorResource(id = R.color.fondo_cocina) to R.drawable.ejercicio
+        "Estudio" -> colorResource(id = R.color.fondo_ejercicio) to R.drawable.estudio
+        "Trabajo" -> colorResource(id = R.color.fondo_estudio) to R.drawable.trabajo
+        "Social" -> colorResource(id = R.color.fondo_trabajo) to R.drawable.social
+        "Nuevo desafío" -> colorResource(id = R.color.fondo_gris) to R.drawable.nuevo
+        else -> colorResource(id = R.color.fondo_gris) to R.drawable.mas
     }
-}*/
+}
 
 @Preview(showBackground = true)
 @Composable

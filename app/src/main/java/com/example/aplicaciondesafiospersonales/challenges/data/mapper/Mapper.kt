@@ -22,7 +22,7 @@ fun ApiResultEntity.toModel() =
     ApiResult(
         this.challenges.map {
             Challenge(
-                title = it.title,
+                title = capitalizeFirstLetter(it.title),
                 category = it.category,
                 amountFulfilled = it.amountFulfilled,
                 amountToBeFulfilled = it.amountToBeFulfilled,
@@ -31,3 +31,7 @@ fun ApiResultEntity.toModel() =
             )
         }
     )
+
+fun capitalizeFirstLetter(input: String): String {
+    return input.replaceFirstChar { it.uppercase() }
+}

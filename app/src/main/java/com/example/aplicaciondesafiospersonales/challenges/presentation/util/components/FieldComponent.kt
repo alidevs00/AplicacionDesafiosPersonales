@@ -1,6 +1,9 @@
 import android.app.DatePickerDialog
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -20,7 +23,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import java.util.Calendar
@@ -41,13 +43,11 @@ fun FieldComponent(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp)
     ) {
 
         Text(
             title,
             style = MaterialTheme.typography.bodyLarge,
-            color = Color.Gray,
             modifier = Modifier.padding(bottom = 8.dp)
         )
 
@@ -82,10 +82,11 @@ fun FieldComponent(
                                 )
                             },
                             year, month, day
-                        ).apply {
-                            // Restringir la fecha mínima
-                            datePicker.minDate = currentDateInMillis
-                        }
+                        )
+                            .apply {
+                                // Restringir la fecha mínima
+                                datePicker.minDate = currentDateInMillis
+                            }
                             .show()
                     },
                 shape = RoundedCornerShape(11.dp),

@@ -1,24 +1,29 @@
 package com.example.aplicaciondesafiospersonales.challenges.presentation.screens.home_screen
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import com.example.aplicaciondesafiospersonales.R
 import com.example.aplicaciondesafiospersonales.challenges.presentation.util.components.AddNewChallengeComponent
 import com.example.aplicaciondesafiospersonales.challenges.presentation.util.components.ChallengeComponent
 import com.example.aplicaciondesafiospersonales.challenges.presentation.util.components.LoadingDialog
-import com.example.aplicaciondesafiospersonales.challenges.presentation.util.components.MyTopAppBar
 
 @Composable
 internal fun HomeScreen(
@@ -41,21 +46,20 @@ fun HomeScreenContent(
     state: HomeScreenViewState,
     navController: NavHostController
 ) {
-    LoadingDialog(isLoading = state.isLoading)
-
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        topBar = {
-            MyTopAppBar(title = "Desafíos")
-        }
-    ) { paddingValues ->
+    Column(modifier = Modifier.padding(20.dp)) {
+        LoadingDialog(isLoading = state.isLoading)
+        Spacer(modifier = Modifier.size(20.dp))
+        Text(
+            style = MaterialTheme.typography.titleLarge,
+            text = stringResource(R.string.mis_desafios_title)
+        )
+        Spacer(modifier = Modifier.size(20.dp))
         LazyVerticalStaggeredGrid(
             modifier = Modifier
-                .padding(top = paddingValues.calculateTopPadding())
                 .fillMaxSize(),
             columns = StaggeredGridCells.Fixed(3),
             horizontalArrangement = Arrangement.spacedBy(10.dp),
-            verticalItemSpacing = 40.dp
+            verticalItemSpacing = 20.dp
         ) {
             items(state.challenges) { challenge ->
                 ChallengeComponent(
@@ -73,3 +77,4 @@ fun HomeScreenContent(
         }
     }
 }
+
