@@ -65,6 +65,7 @@ fun HomeScreenContent(
                 ChallengeComponent(
                     title = challenge.title,
                     category = challenge.category,
+                    progress = challenge.progress,
                     onClick = { navController.navigate("view_challenge") }
                 )
             }

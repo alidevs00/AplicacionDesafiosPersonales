@@ -78,7 +78,6 @@ dependencies {
     implementation(libs.logging.interceptor)
     implementation(libs.logging.interceptor.v4110)
     implementation(libs.androidx.navigation.compose)
-
 }
 
 kapt {

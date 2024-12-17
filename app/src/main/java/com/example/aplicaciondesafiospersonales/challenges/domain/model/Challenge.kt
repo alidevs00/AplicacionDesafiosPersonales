@@ -10,5 +10,6 @@ data class Challenge (
     val amountToBeFulfilled : String,
     val amountFulfilled : String,
     val startDate : String,
-    val finishDate : String
+    val finishDate : String,
+    val progress : Float = 0f
 )
