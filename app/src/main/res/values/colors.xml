@@ -16,4 +16,5 @@
     <color name="fondo_trabajo">#FFD3FE</color>
     <color name="fondo_estudio">#8E9FFF</color>
     <color name="fondo_gris">#ECECEC</color>
+    <color name="fondo_verde">#FFA8F0C1</color>
 </resources>

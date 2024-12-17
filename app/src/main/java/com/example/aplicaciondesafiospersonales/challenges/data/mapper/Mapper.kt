@@ -5,7 +5,6 @@ import com.example.aplicaciondesafiospersonales.challenges.domain.model.ApiError
 import com.example.aplicaciondesafiospersonales.challenges.domain.model.ApiResult
 import com.example.aplicaciondesafiospersonales.challenges.domain.model.Challenge
 import com.example.aplicaciondesafiospersonales.challenges.domain.model.NetworkError
-import com.parse.ParseObject
 import java.io.IOException
 
 fun Throwable.toNetworkError(): NetworkError {

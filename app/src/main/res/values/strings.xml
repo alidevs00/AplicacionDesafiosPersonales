@@ -7,4 +7,8 @@
 
     <string name="app_name">AplicacionDesafiosPersonales</string>
     <string name="mis_desafios">Mis desafíos</string>
+    <string name="field_titulo">TÍTULO</string>
+    <string name="field_categoria">CATEGORÍA</string>
+    <string name="field_cantidad_a_cumplir">CANTIDAD A CUMPLIR</string>
+    <string name="field_fecha_de_finalizacion">FECHA DE FINALIZACIÓN</string>
 </resources>

@@ -1,11 +1,6 @@
-package com.example.aplicaciondesafiospersonales.challenges.presentation.util.components
-
 import android.app.DatePickerDialog
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -31,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import java.util.Calendar
 import java.util.Locale
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FieldComponent(
@@ -39,17 +33,17 @@ fun FieldComponent(
     textState: MutableState<String>,
     isDropdown: Boolean = false,
     options: List<String>? = null,
-    isDateField: Boolean = false // Nuevo parámetro para habilitar DatePicker
+    isDateField: Boolean = false
 ) {
     var expanded by remember { mutableStateOf(false) }
-    val context = LocalContext.current // Contexto necesario para DatePickerDialog
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
     ) {
-        // Título del campo
+
         Text(
             title,
             style = MaterialTheme.typography.bodyLarge,
@@ -64,27 +58,34 @@ fun FieldComponent(
             val month = calendar.get(Calendar.MONTH)
             val day = calendar.get(Calendar.DAY_OF_MONTH)
 
+            // Establecer la fecha mínima como la fecha actual
+            calendar.set(year, month, day)
+            val currentDateInMillis = calendar.timeInMillis
+
             OutlinedTextField(
                 value = textState.value,
                 onValueChange = {},
-                readOnly = true, // Evita que el usuario escriba manualmente
+                readOnly = true,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(56.dp) // Altura uniforme para todos los campos
+                    .height(56.dp)
                     .clickable {
                         DatePickerDialog(
-                                context,
-                                { _, selectedYear, selectedMonth, selectedDay ->
-                                    textState.value = String.format(
-                                        Locale.getDefault(),
-                                        "%02d/%02d/%04d",
-                                        selectedDay,
-                                        selectedMonth + 1,
-                                        selectedYear
-                                    )
-                                },
-                                year, month, day
-                            )
+                            context,
+                            { _, selectedYear, selectedMonth, selectedDay ->
+                                textState.value = String.format(
+                                    Locale.getDefault(),
+                                    "%02d/%02d/%04d",
+                                    selectedDay,
+                                    selectedMonth + 1,
+                                    selectedYear
+                                )
+                            },
+                            year, month, day
+                        ).apply {
+                            // Restringir la fecha mínima
+                            datePicker.minDate = currentDateInMillis
+                        }
                             .show()
                     },
                 shape = RoundedCornerShape(11.dp),
@@ -102,7 +103,11 @@ fun FieldComponent(
                                 )
                             },
                             year, month, day
-                        ).show()
+                        ).apply {
+                            // Restringir la fecha mínima
+                            datePicker.minDate = currentDateInMillis
+                        }
+                            .show()
                     }) {
                         Icon(
                             imageVector = Icons.Default.DateRange,
@@ -124,7 +129,7 @@ fun FieldComponent(
                     readOnly = true,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(56.dp) // Altura uniforme
+                        .height(56.dp)
                         .menuAnchor(),
                     shape = RoundedCornerShape(11.dp),
                     trailingIcon = {
@@ -158,13 +163,9 @@ fun FieldComponent(
                 onValueChange = { textState.value = it },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(56.dp), // Altura uniforme
+                    .height(56.dp),
                 shape = RoundedCornerShape(11.dp)
             )
         }
     }
 }
-
-
-
-
