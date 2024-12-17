@@ -142,7 +142,6 @@ fun AddNewChallengeScreenContent(
                                 finishDate = endDateState.value
                             )
                             navController.popBackStack()
-
                         },
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFA8F0C1)),
                         modifier = Modifier

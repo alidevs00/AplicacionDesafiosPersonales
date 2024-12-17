@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -25,6 +26,13 @@ internal fun HomeScreen(
     navController: NavHostController
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    LaunchedEffect(key1 = navController) {
+        navController.currentBackStackEntry?.let { backStackEntry ->
+            if (backStackEntry.destination.route == "challenge_list") {
+                viewModel.getChallenges()
+            }
+        }
+    }
     HomeScreenContent(state = state, navController = navController)
 }
 
@@ -34,16 +42,20 @@ fun HomeScreenContent(
     navController: NavHostController
 ) {
     LoadingDialog(isLoading = state.isLoading)
-    Scaffold(modifier = Modifier.fillMaxSize(),
+
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
         topBar = {
             MyTopAppBar(title = "Desafíos")
         }
-    ) {
+    ) { paddingValues ->
         LazyVerticalStaggeredGrid(
-            modifier = Modifier.padding(top = it.calculateTopPadding()),
+            modifier = Modifier
+                .padding(top = paddingValues.calculateTopPadding())
+                .fillMaxSize(),
             columns = StaggeredGridCells.Fixed(3),
             horizontalArrangement = Arrangement.spacedBy(10.dp),
-            verticalItemSpacing = 10.dp
+            verticalItemSpacing = 40.dp
         ) {
             items(state.challenges) { challenge ->
                 ChallengeComponent(
@@ -52,6 +64,7 @@ fun HomeScreenContent(
                     onClick = { navController.navigate("view_challenge") }
                 )
             }
+
             item {
                 AddNewChallengeComponent(onClick = {
                     navController.navigate("add_new_challenge")
