@@ -26,7 +26,6 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -35,7 +34,9 @@ import com.example.aplicaciondesafiospersonales.challenges.presentation.util.com
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddNewChallengeScreen(navController: NavHostController) {
+fun AddNewChallengeScreen(
+    navController: NavHostController
+) {
     // Estados para cada campo de texto
     val titleState = remember { mutableStateOf("") }
     val categoryState = remember { mutableStateOf("") }
@@ -43,52 +44,51 @@ fun AddNewChallengeScreen(navController: NavHostController) {
     val endDateState = remember { mutableStateOf("") }
 
     // Opciones para el desplegable
-    val categories = listOf("Lectura", "Ejercicio", "Estudio", "Mental", "Personal", "Social", "Trabajo") //obtenerlas de un enum
+    val categories = listOf("Lectura", "Ejercicio", "Estudio", "Mental", "Personal", "Social", "Trabajo")
 
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
                 title = { Text("Nuevo desafío", style = MaterialTheme.typography.titleLarge) },
                 navigationIcon = {
-                    IconButton(onClick = {
-                        navController.popBackStack() // Regresar a la pantalla anterior
-                    }) {
+                    IconButton(onClick = { navController.popBackStack() }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Volver")
                     }
                 },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = Color(0xFFA8F0C1), // Fondo verde para el título
+                    containerColor = Color(0xFFA8F0C1),
                     titleContentColor = Color.Black,
                     navigationIconContentColor = Color.Black
                 )
             )
         }
     ) { padding ->
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
                 .background(Color(0xFFA8F0C1)) // Fondo verde
         ) {
-            // Contenedor blanco
             Column(
                 modifier = Modifier
-                    .weight(1f) // Ocupa el espacio restante
-                    .background(
-                        Color.White,
-                        shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
-                    )
-                    .padding(horizontal = 36.dp, vertical = 24.dp)
-                    .verticalScroll(rememberScrollState()), // Aquí se habilita el desplazamiento
-                verticalArrangement = Arrangement.spacedBy(45.dp) // Mayor separación entre los campos
+                    .fillMaxSize()
+                    .background(Color.White, shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
             ) {
+                // Contenido desplazable
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(horizontal = 36.dp, vertical = 24.dp)
+                        .verticalScroll(rememberScrollState()), // Scroll vertical
+                    verticalArrangement = Arrangement.spacedBy(45.dp) // Espaciado entre elementos
+                ) {
+                    FieldComponent(title = "TÍTULO", textState = titleState)
+                    FieldComponent(title = "CATEGORÍA", textState = categoryState, isDropdown = true, options = categories)
+                    FieldComponent(title = "CANTIDAD A CUMPLIR", textState = amountState)
+                    FieldComponent(title = "FECHA DE FINALIZACIÓN", textState = endDateState, isDateField = true)
+                }
 
-                FieldComponent(title = "TÍTULO", textState = titleState)
-                FieldComponent(title = "CATEGORÍA", textState = categoryState, isDropdown = true, options = categories)
-                FieldComponent(title = "CANTIDAD A CUMPLIR", textState = amountState)
-                FieldComponent(title = "FECHA DE FINALIZACIÓN", textState = endDateState)
-
-                // Botón Guardar en la parte inferior
+                // Botón fijo en la parte inferior
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -98,7 +98,6 @@ fun AddNewChallengeScreen(navController: NavHostController) {
                         onClick = { /* Lógica para guardar */ },
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFA8F0C1)),
                         modifier = Modifier
-                            .align(Alignment.BottomCenter)
                             .fillMaxWidth()
                             .height(56.dp),
                         shape = RoundedCornerShape(5.dp)
@@ -109,12 +108,14 @@ fun AddNewChallengeScreen(navController: NavHostController) {
                             style = MaterialTheme.typography.bodyLarge
                         )
                     }
-
                 }
             }
         }
     }
 }
+
+
+
 
 
 

@@ -1,22 +1,22 @@
 package com.example.aplicaciondesafiospersonales.challenges.presentation.util.components
 
+import android.app.DatePickerDialog
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -26,7 +26,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import java.util.Calendar
+import java.util.Locale
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -34,20 +38,82 @@ fun FieldComponent(
     title: String,
     textState: MutableState<String>,
     isDropdown: Boolean = false,
-    options: List<String>? = null
+    options: List<String>? = null,
+    isDateField: Boolean = false // Nuevo parámetro para habilitar DatePicker
 ) {
     var expanded by remember { mutableStateOf(false) }
+    val context = LocalContext.current // Contexto necesario para DatePickerDialog
 
-    Column {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
+    ) {
+        // Título del campo
         Text(
             title,
-            style = MaterialTheme.typography.titleLarge,
-            color = Color.Gray
+            style = MaterialTheme.typography.bodyLarge,
+            color = Color.Gray,
+            modifier = Modifier.padding(bottom = 8.dp)
         )
-        Spacer(modifier = Modifier.size(8.dp))
 
-        // Si es un dropdown, mostramos el ExposedDropdownMenu
-        if (isDropdown && options != null) {
+        // Lógica para DatePickerDialog
+        if (isDateField) {
+            val calendar = Calendar.getInstance()
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+            OutlinedTextField(
+                value = textState.value,
+                onValueChange = {},
+                readOnly = true, // Evita que el usuario escriba manualmente
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp) // Altura uniforme para todos los campos
+                    .clickable {
+                        DatePickerDialog(
+                                context,
+                                { _, selectedYear, selectedMonth, selectedDay ->
+                                    textState.value = String.format(
+                                        Locale.getDefault(),
+                                        "%02d/%02d/%04d",
+                                        selectedDay,
+                                        selectedMonth + 1,
+                                        selectedYear
+                                    )
+                                },
+                                year, month, day
+                            )
+                            .show()
+                    },
+                shape = RoundedCornerShape(11.dp),
+                trailingIcon = {
+                    IconButton(onClick = {
+                        DatePickerDialog(
+                            context,
+                            { _, selectedYear, selectedMonth, selectedDay ->
+                                textState.value = String.format(
+                                    Locale.getDefault(),
+                                    "%02d/%02d/%04d",
+                                    selectedDay,
+                                    selectedMonth + 1,
+                                    selectedYear
+                                )
+                            },
+                            year, month, day
+                        ).show()
+                    }) {
+                        Icon(
+                            imageVector = Icons.Default.DateRange,
+                            contentDescription = "Calendar"
+                        )
+                    }
+                }
+            )
+        }
+        // Lógica para DropdownMenu
+        else if (isDropdown && options != null) {
             ExposedDropdownMenuBox(
                 expanded = expanded,
                 onExpandedChange = { expanded = it }
@@ -55,26 +121,17 @@ fun FieldComponent(
                 OutlinedTextField(
                     value = textState.value,
                     onValueChange = { textState.value = it },
+                    readOnly = true,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(50.dp)
+                        .height(56.dp) // Altura uniforme
                         .menuAnchor(),
                     shape = RoundedCornerShape(11.dp),
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = Color(0xFFD2D2D2),
-                        unfocusedBorderColor = Color(0xFFD2D2D2)
-                    ),
-                    readOnly = true, // Hace que no se pueda escribir directamente
                     trailingIcon = {
-                        val interactionSource = remember { MutableInteractionSource() }
                         Icon(
                             imageVector = Icons.Default.ArrowDropDown,
                             contentDescription = "Dropdown",
-                            modifier = Modifier
-                                .clickable(
-                                    interactionSource = interactionSource,
-                                    indication = null // Si no deseas la animación de click
-                                ) { expanded = !expanded }
+                            modifier = Modifier.clickable { expanded = !expanded }
                         )
                     }
                 )
@@ -84,7 +141,7 @@ fun FieldComponent(
                 ) {
                     options.forEach { option ->
                         DropdownMenuItem(
-                            text = { Text(text = option) },
+                            text = { Text(option) },
                             onClick = {
                                 textState.value = option
                                 expanded = false
@@ -93,22 +150,21 @@ fun FieldComponent(
                     }
                 }
             }
-        } else {
-            // Si no es un dropdown, mostramos un OutlinedTextField normal
+        }
+        // Lógica para un campo de texto normal
+        else {
             OutlinedTextField(
                 value = textState.value,
                 onValueChange = { textState.value = it },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(50.dp),
-                shape = RoundedCornerShape(11.dp),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Color(0xFFD2D2D2),
-                    unfocusedBorderColor = Color(0xFFD2D2D2)
-                )
+                    .height(56.dp), // Altura uniforme
+                shape = RoundedCornerShape(11.dp)
             )
         }
     }
 }
+
+
 
 
