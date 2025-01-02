@@ -2,8 +2,11 @@ package com.example.aplicaciondesafiospersonales.challenges.presentation.screens
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.aplicaciondesafiospersonales.challenges.domain.model.ApiError
 import com.example.aplicaciondesafiospersonales.challenges.domain.model.Challenge
 import com.example.aplicaciondesafiospersonales.challenges.domain.repository.ChallengesRepository
+import com.example.aplicaciondesafiospersonales.util.Event
+import com.example.aplicaciondesafiospersonales.util.EventBus
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,15 +26,24 @@ class HomeScreenViewModel @Inject constructor(
         getChallenges()
     }
 
-    internal fun getChallenges() {
+    private fun getChallenges() {
         viewModelScope.launch {
             _state.update {
                 it.copy(isLoading = true)
             }
             challengeRepository.getChallenges()
-            _state.update {
-                it.copy(challenges = challengeRepository.getChallenges().challenges.calculateProgress())
-            }
+                .onRight { result ->
+                    _state.update {
+                        it.copy(challenges = result.challenges.calculateProgress())
+                    }
+                }
+                .onLeft { error ->
+                    when (error.error) {
+                        ApiError.NetworkError -> EventBus.sendEvent(Event.Toast("Error de conexión cargando la base de datos"))
+                        ApiError.UnknownError -> EventBus.sendEvent(Event.Toast("Error cargando la base de datos"))
+                    }
+                }
+
             _state.update {
                 it.copy(isLoading = false)
             }

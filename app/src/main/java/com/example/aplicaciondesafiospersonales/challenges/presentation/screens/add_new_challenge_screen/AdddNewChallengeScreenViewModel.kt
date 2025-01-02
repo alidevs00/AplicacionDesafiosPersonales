@@ -2,6 +2,8 @@ package com.example.aplicaciondesafiospersonales.challenges.presentation.screens
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.aplicaciondesafiospersonales.challenges.domain.model.Challenge
@@ -24,7 +26,7 @@ class AddNewChallengeScreenViewModel @Inject constructor(
     private val _state = MutableStateFlow(AddNewChallengeScreenViewState())
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun saveChallenge(
+    private fun saveChallenge(
         title: String,
         category: String,
         amountToBeFulfilled: String,
@@ -41,12 +43,18 @@ class AddNewChallengeScreenViewModel @Inject constructor(
                 startDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                 finishDate = finishDate
             )
-            challengeRepository.addChallenge(challenge)
 
-            _state.update {
-                it.copy(challenge = challenge, isLoading = false)
-            }
-            EventBus.sendEvent(Event.Toast("Desafío guardado correctamente"))
+            challengeRepository.addChallenge(challenge)
+                .onRight {
+                    _state.update {
+                        it.copy(challenge = challenge, isLoading = false)
+                    }
+                    EventBus.sendEvent(Event.Toast("Desafío guardado correctamente"))
+                }
+                .onLeft {
+                    EventBus.sendEvent(Event.Toast("Error guardando el desafío"))
+                }
+
         }
     }
 }

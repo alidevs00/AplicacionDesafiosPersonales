@@ -8,8 +8,8 @@ data class Challenge (
     val title : String,
     val category : String,
     val amountToBeFulfilled : String,
-    val amountFulfilled : String,
+    var amountFulfilled : String,
     val startDate : String,
     val finishDate : String,
-    val progress : Float = 0f
+    var progress : Float = 0f
 )

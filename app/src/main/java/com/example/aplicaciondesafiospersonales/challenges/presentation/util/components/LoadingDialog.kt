@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -23,11 +24,14 @@ fun LoadingDialog(isLoading: Boolean) {
         ) {
             Box(
                 modifier = Modifier
-                    .width(200.dp)
+                    .width(100.dp)
                     .clip(RoundedCornerShape(15.dp))
                     .background(Color.White)
             ) {
-                CircularProgressIndicator(modifier = Modifier.padding(10.dp))
+                CircularProgressIndicator(modifier = Modifier
+                    .padding(10.dp)
+                    .align(Alignment.Center)
+                )
             }
         }
     }
