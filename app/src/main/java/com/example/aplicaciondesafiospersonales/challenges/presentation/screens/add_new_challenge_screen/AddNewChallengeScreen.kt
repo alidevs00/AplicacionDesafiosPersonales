@@ -74,7 +74,7 @@ fun AddNewChallengeScreenContent(
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text("Nuevo desafío", style = MaterialTheme.typography.titleLarge) },
+                title = { Text(stringResource(R.string.nuevo_desafío), style = MaterialTheme.typography.titleLarge) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Volver")
@@ -156,7 +156,7 @@ fun AddNewChallengeScreenContent(
                         shape = RoundedCornerShape(5.dp)
                     ) {
                         Text(
-                            "Guardar",
+                            stringResource(R.string.guardar_desafío),
                             color = Color.Black,
                             style = MaterialTheme.typography.bodyLarge
                         )

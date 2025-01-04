@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="back4app_server_url">https://parseapi.back4app.com/</string>
+
+    <!-- Paste BOTH strings as required -->
+    <string name="back4app_app_id">sIt5Rwbgqx1drq2lnudsM4iOgiWwtxMDhS28omFq</string>
+    <string name="back4app_client_key">L6ZkvAI4BdccAj9FtWTQBV7Fm4Fgn5OjSxlosUOe</string>
+
+    <string name="app_name">AplicacionDesafiosPersonales</string>
+    <string name="mis_desafios">Mis desafíos</string>
+    <string name="field_titulo">Título</string>
+    <string name="field_categoria">Categoría</string>
+    <string name="field_cantidad_a_cumplir">Cantidad a cumplir</string>
+    <string name="field_fecha_de_finalizacion">Fecha de finalización</string>
+    <string name="añadir_nuevo_desafío">Añadir nuevo desafío</string>
+    <string name="guardar_desafío">Guardar</string>
+    <string name="nuevo_desafío">Nuevo desafío</string>
+
+</resources>

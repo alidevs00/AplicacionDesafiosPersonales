@@ -51,7 +51,7 @@ fun HomeScreenContent(
         Spacer(modifier = Modifier.size(20.dp))
         Text(
             style = MaterialTheme.typography.titleLarge,
-            text = stringResource(R.string.mis_desafios_title)
+            text = stringResource(R.string.mis_desafios)
         )
         Spacer(modifier = Modifier.size(20.dp))
         LazyVerticalStaggeredGrid(

@@ -92,7 +92,7 @@ fun ChallengeComponent(title: String, category: String, progress: Float, onClick
 @Composable
 fun AddNewChallengeComponent(onClick: () -> Unit) {
     ChallengeComponent(
-        title = "Añadir nuevo desafío",
+        title = stringResource(R.string.añadir_nuevo_desafío),
         category = "Nuevo desafío",
         progress = 0f,
         onClick = onClick
