@@ -22,6 +22,7 @@ fun ApiResultEntity.toModel() =
     ApiResult(
         this.challenges.map {
             Challenge(
+                id = it.objectId,
                 title = capitalizeFirstLetter(it.title),
                 category = it.category,
                 amountFulfilled = it.amountFulfilled,

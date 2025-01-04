@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.aplicaciondesafiospersonales.challenges.domain.model.ApiError
 import com.example.aplicaciondesafiospersonales.challenges.domain.model.Challenge
+import com.example.aplicaciondesafiospersonales.challenges.domain.model.ChallengeUpdate
 import com.example.aplicaciondesafiospersonales.challenges.domain.repository.ChallengesRepository
 import com.example.aplicaciondesafiospersonales.util.Event
 import com.example.aplicaciondesafiospersonales.util.EventBus
@@ -53,18 +54,24 @@ class HomeScreenViewModel @Inject constructor(
     private fun List<Challenge>.calculateProgress(): List<Challenge> =
         this.map { challenge ->
             challenge.copy(
-                progress =
-                if (challenge.amountFulfilled.toFloat() > 0) {
-                    val progressCalculated =
-                        (challenge.amountFulfilled.toFloat() / challenge.amountToBeFulfilled.toFloat())
-                            .coerceIn(
-                                0f,
-                                1f
-                            )
-                    progressCalculated
-                } else {
-                    0f
-                }
+                progress = (challenge.amountFulfilled / challenge.amountToBeFulfilled.toFloat()).coerceIn(0f, 1f)
             )
         }
+
+    internal fun updateChallenge(id: String, fieldsToUpdate: ChallengeUpdate) {
+        viewModelScope.launch {
+            challengeRepository.updateChallenge(id, fieldsToUpdate)
+
+            val updatedChallenges = _state.value.challenges.map { challenge ->
+                if (challenge.id == id) {
+                    challenge.copy(amountFulfilled = fieldsToUpdate.amountFulfilled)
+                } else {
+                    challenge
+                }
+            }.calculateProgress()
+            _state.update {
+                it.copy(challenges = updatedChallenges)
+            }
+        }
+    }
 }

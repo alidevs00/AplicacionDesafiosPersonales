@@ -35,11 +35,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.aplicaciondesafiospersonales.R
+import com.example.aplicaciondesafiospersonales.util.Constant
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -61,15 +63,12 @@ fun AddNewChallengeScreenContent(
     navController: NavHostController,
     viewModel: AddNewChallengeScreenViewModel
 ) {
-    // Estados para cada campo de texto
-    val titleState = remember { mutableStateOf("") }
-    val categoryState = remember { mutableStateOf("") }
-    val amountState = remember { mutableStateOf("") }
-    val endDateState = remember { mutableStateOf("") }
 
-    // Opciones para el desplegable
-    val categories =
-        listOf("Lectura", "Ejercicio", "Estudio", "Mental", "Personal", "Social", "Trabajo")
+    val titleState = remember { mutableStateOf(Constant.EMPTY_STRING) }
+    val categoryState = remember { mutableStateOf(Constant.EMPTY_STRING) }
+    val amountState = remember { mutableStateOf(Constant.EMPTY_STRING) }
+    val endDateState = remember { mutableStateOf(Constant.EMPTY_STRING) }
+    val errorState = remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -119,7 +118,7 @@ fun AddNewChallengeScreenContent(
                         title = stringResource(R.string.field_categoria),
                         textState = categoryState,
                         isDropdown = true,
-                        options = categories
+                        options = stringArrayResource(R.array.categorias_array).toList()
                     )
                     FieldComponent(
                         title = stringResource(R.string.field_cantidad_a_cumplir),
@@ -140,10 +139,10 @@ fun AddNewChallengeScreenContent(
                 ) {
                     Button(
                         onClick = {
-                            viewModel.saveChallenge(
+                           viewModel.saveChallenge(
                                 title = titleState.value,
                                 category = categoryState.value,
-                                amountToBeFulfilled = amountState.value,
+                                amountToBeFulfilled = amountState.value.toInt(),
                                 finishDate = endDateState.value
                             )
                             navController.popBackStack()

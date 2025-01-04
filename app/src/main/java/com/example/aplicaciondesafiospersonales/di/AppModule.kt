@@ -23,6 +23,7 @@ object AppModule {
                 val request = chain.request().newBuilder()
                     .addHeader("X-Parse-Application-Id", "sIt5Rwbgqx1drq2lnudsM4iOgiWwtxMDhS28omFq")
                     .addHeader("X-Parse-REST-API-Key", "KmMnTE3dPbnDpzWMRx3kt0hxAulRl6VfPkFIB41m")
+                    .addHeader("Content-Type", "application/json")
                     .build()
                 chain.proceed(request)
             }

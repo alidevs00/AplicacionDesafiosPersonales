@@ -14,5 +14,16 @@
     <string name="añadir_nuevo_desafío">Add new challenge</string>
     <string name="guardar_desafío">Save</string>
     <string name="nuevo_desafío">New challenge</string>
+    <string name="desafio_guardado_ok">"Challenge saved successfully"</string>
+    <string-array name="categorias_array">
+        <item>Reading</item>
+        <item>Exercise</item>
+        <item>Study</item>
+        <item>Mental</item>
+        <item>Personal</item>
+        <item>Social</item>
+        <item>Work</item>
+        <item>Cooking</item>
+    </string-array>
 
 </resources>

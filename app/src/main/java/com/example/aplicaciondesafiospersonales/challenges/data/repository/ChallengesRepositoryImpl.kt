@@ -6,6 +6,7 @@ import com.example.aplicaciondesafiospersonales.challenges.data.mapper.toNetwork
 import com.example.aplicaciondesafiospersonales.challenges.data.remote.ChallengesApi
 import com.example.aplicaciondesafiospersonales.challenges.domain.model.ApiResult
 import com.example.aplicaciondesafiospersonales.challenges.domain.model.Challenge
+import com.example.aplicaciondesafiospersonales.challenges.domain.model.ChallengeUpdate
 import com.example.aplicaciondesafiospersonales.challenges.domain.model.NetworkError
 import com.example.aplicaciondesafiospersonales.challenges.domain.repository.ChallengesRepository
 import javax.inject.Inject
@@ -22,6 +23,11 @@ class ChallengesRepositoryImpl @Inject constructor(
     override suspend fun addChallenge(challenge: Challenge): Either<NetworkError, Unit> =
         Either.catch {
             challengesApi.addChallengeApi(challenge)
+        }.mapLeft { it.toNetworkError() }
+
+    override suspend fun updateChallenge(id: String, fieldsToUpdate: ChallengeUpdate): Either<NetworkError, Unit> =
+        Either.catch {
+            challengesApi.updateChallengeFieldsApi(id, fieldsToUpdate)
         }.mapLeft { it.toNetworkError() }
 
 

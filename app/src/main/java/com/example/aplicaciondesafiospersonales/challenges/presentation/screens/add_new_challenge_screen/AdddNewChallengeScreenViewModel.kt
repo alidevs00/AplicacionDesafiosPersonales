@@ -2,12 +2,11 @@ package com.example.aplicaciondesafiospersonales.challenges.presentation.screens
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.aplicaciondesafiospersonales.challenges.domain.model.Challenge
 import com.example.aplicaciondesafiospersonales.challenges.domain.repository.ChallengesRepository
+import com.example.aplicaciondesafiospersonales.util.Constant
 import com.example.aplicaciondesafiospersonales.util.Event
 import com.example.aplicaciondesafiospersonales.util.EventBus
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,10 +25,10 @@ class AddNewChallengeScreenViewModel @Inject constructor(
     private val _state = MutableStateFlow(AddNewChallengeScreenViewState())
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun saveChallenge(
+    internal fun saveChallenge(
         title: String,
         category: String,
-        amountToBeFulfilled: String,
+        amountToBeFulfilled: Int,
         finishDate: String
     ) {
         viewModelScope.launch {
@@ -39,7 +38,7 @@ class AddNewChallengeScreenViewModel @Inject constructor(
                 title = title,
                 category = category,
                 amountToBeFulfilled = amountToBeFulfilled,
-                amountFulfilled = "0",
+                amountFulfilled = Constant.INT_ZERO,
                 startDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                 finishDate = finishDate
             )

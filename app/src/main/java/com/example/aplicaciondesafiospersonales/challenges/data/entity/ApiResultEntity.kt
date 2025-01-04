@@ -12,8 +12,8 @@ data class ChallengeEntity (
     @SerializedName("updatedAt") val updatedAt : String,
     @SerializedName("title") val title : String,
     @SerializedName("category") val category : String,
-    @SerializedName("amountToBeFulfilled") val amountToBeFulfilled : String,
-    @SerializedName("amountFulfilled") val amountFulfilled : String,
+    @SerializedName("amountToBeFulfilled") val amountToBeFulfilled : Int,
+    @SerializedName("amountFulfilled") val amountFulfilled : Int,
     @SerializedName("startDate") val startDate : String,
     @SerializedName("finishDate") val finishDate : String
 )

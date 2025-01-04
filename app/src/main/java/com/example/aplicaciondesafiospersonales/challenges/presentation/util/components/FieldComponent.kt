@@ -145,7 +145,7 @@ fun FieldComponent(
                     expanded = expanded,
                     onDismissRequest = { expanded = false }
                 ) {
-                    options.forEach { option ->
+                    options.sorted().forEach { option ->
                         DropdownMenuItem(
                             text = { Text(option) },
                             onClick = {
