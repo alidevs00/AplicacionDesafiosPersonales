@@ -52,6 +52,15 @@ internal fun HomeScreen(
         showDialog.value = selectedChallenge.value != null
     }
 
+    LaunchedEffect(key1 = navController) {
+        navController.currentBackStackEntry?.let { backStackEntry ->
+            if (backStackEntry.destination.route == "challenge_list") {
+                viewModel.getChallenges()
+            }
+        }
+    }
+
+
     HomeScreenContent(
         state = state,
         navController = navController,

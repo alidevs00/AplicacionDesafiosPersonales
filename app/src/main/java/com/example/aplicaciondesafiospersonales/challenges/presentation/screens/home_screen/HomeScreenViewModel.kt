@@ -27,7 +27,7 @@ class HomeScreenViewModel @Inject constructor(
         getChallenges()
     }
 
-    private fun getChallenges() {
+    internal fun getChallenges() {
         viewModelScope.launch {
             _state.update {
                 it.copy(isLoading = true)
