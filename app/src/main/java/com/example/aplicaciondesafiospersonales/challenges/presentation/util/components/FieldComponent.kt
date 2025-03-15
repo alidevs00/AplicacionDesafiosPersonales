@@ -23,6 +23,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import java.util.Calendar
@@ -35,7 +36,8 @@ fun FieldComponent(
     textState: MutableState<String>,
     isDropdown: Boolean = false,
     options: List<String>? = null,
-    isDateField: Boolean = false
+    isDateField: Boolean = false,
+    errorState: MutableState<Boolean> = mutableStateOf(false)
 ) {
     var expanded by remember { mutableStateOf(false) }
     val context = LocalContext.current
@@ -159,14 +161,22 @@ fun FieldComponent(
         }
         // Lógica para un campo de texto normal
         else {
-            OutlinedTextField(
-                value = textState.value,
-                onValueChange = { textState.value = it },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp),
-                shape = RoundedCornerShape(11.dp)
-            )
+            Column {
+                OutlinedTextField(
+                    value = textState.value,
+                    onValueChange = { textState.value = it },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(56.dp),
+                    shape = RoundedCornerShape(11.dp),
+                    singleLine = true
+                )
+                Text(
+                    color = if(errorState.value) Color.Black else Color.Transparent,
+                    text = "error"
+                )
+            }
+
         }
     }
 }

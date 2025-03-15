@@ -1,6 +1,7 @@
 package com.example.aplicaciondesafiospersonales.challenges.data.repository
 
 import arrow.core.Either
+import com.example.aplicaciondesafiospersonales.challenges.data.mapper.mapToSpanish
 import com.example.aplicaciondesafiospersonales.challenges.data.mapper.toModel
 import com.example.aplicaciondesafiospersonales.challenges.data.mapper.toNetworkError
 import com.example.aplicaciondesafiospersonales.challenges.data.remote.ChallengesApi
@@ -22,14 +23,16 @@ class ChallengesRepositoryImpl @Inject constructor(
 
     override suspend fun addChallenge(challenge: Challenge): Either<NetworkError, Unit> =
         Either.catch {
-            challengesApi.addChallengeApi(challenge)
+            challengesApi.addChallengeApi(challenge.mapToSpanish())
         }.mapLeft { it.toNetworkError() }
 
-    override suspend fun updateChallenge(id: String, fieldsToUpdate: ChallengeUpdate): Either<NetworkError, Unit> =
+    override suspend fun updateChallenge(
+        id: String,
+        fieldsToUpdate: ChallengeUpdate
+    ): Either<NetworkError, Unit> =
         Either.catch {
             challengesApi.updateChallengeFieldsApi(id, fieldsToUpdate)
         }.mapLeft { it.toNetworkError() }
-
 
 
 }

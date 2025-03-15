@@ -24,6 +24,20 @@ class AddNewChallengeScreenViewModel @Inject constructor(
 
     private val _state = MutableStateFlow(AddNewChallengeScreenViewState())
 
+   /* @RequiresApi(Build.VERSION_CODES.O)
+    internal fun validateFields(
+        title: String,
+        category: String,
+        amountToBeFulfilled: Int,
+        finishDate: String
+    ): MutableState<Boolean> {
+        if (amountToBeFulfilled.contains("a")) return mutableStateOf(true)
+        else {
+            saveChallenge(title, category, amountToBeFulfilled, finishDate)
+            return mutableStateOf(false)
+        }
+    }*/
+
     @RequiresApi(Build.VERSION_CODES.O)
     internal fun saveChallenge(
         title: String,

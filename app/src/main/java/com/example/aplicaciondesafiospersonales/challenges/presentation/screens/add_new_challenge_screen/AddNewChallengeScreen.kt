@@ -122,7 +122,8 @@ fun AddNewChallengeScreenContent(
                     )
                     FieldComponent(
                         title = stringResource(R.string.field_cantidad_a_cumplir),
-                        textState = amountState
+                        textState = amountState,
+                        errorState = errorState
                     )
                     FieldComponent(
                         title = stringResource(R.string.field_fecha_de_finalizacion),
@@ -145,7 +146,7 @@ fun AddNewChallengeScreenContent(
                                 amountToBeFulfilled = amountState.value.toInt(),
                                 finishDate = endDateState.value
                             )
-                            navController.popBackStack()
+                            if (!errorState.value) navController.popBackStack()
                         },
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFA8F0C1)),
                         modifier = Modifier

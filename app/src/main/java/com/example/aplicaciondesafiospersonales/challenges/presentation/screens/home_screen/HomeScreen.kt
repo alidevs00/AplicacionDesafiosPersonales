@@ -60,7 +60,6 @@ internal fun HomeScreen(
         }
     }
 
-
     HomeScreenContent(
         state = state,
         navController = navController,

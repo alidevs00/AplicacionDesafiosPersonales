@@ -111,6 +111,7 @@ fun ShowMoreChallengesComponent(onClick: () -> Unit) {
 
 @Composable
 fun getCategoryAttributes(category: String): Pair<Color, Int> {
+
     return when (category) {
         "Lectura" -> colorResource(id = R.color.fondo_lectura) to R.drawable.lectura
         "Mental" -> colorResource(id = R.color.fondo_mental) to R.drawable.mental
