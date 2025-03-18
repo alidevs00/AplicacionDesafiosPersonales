@@ -13,6 +13,7 @@
     <string name="field_fecha_de_finalizacion">End date</string>
     <string name="añadir_nuevo_desafío">Add new challenge</string>
     <string name="guardar_desafío">Save</string>
+    <string name="eliminar_desafío">Delete</string>
     <string name="nuevo_desafío">New challenge</string>
     <string name="desafio_guardado_ok">"Challenge saved successfully"</string>
     <string-array name="categorias_array">

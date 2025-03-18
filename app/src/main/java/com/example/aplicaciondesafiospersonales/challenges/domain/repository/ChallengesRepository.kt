@@ -10,4 +10,5 @@ interface ChallengesRepository {
     suspend fun getChallenges(): Either<NetworkError, ApiResult>
     suspend fun addChallenge(challenge: Challenge) : Either<NetworkError, Unit>
     suspend fun updateChallenge(id: String, fieldsToUpdate: ChallengeUpdate): Either<NetworkError, Unit>
+    suspend fun deleteChallenge(id: String): Either<NetworkError, Unit>
 }

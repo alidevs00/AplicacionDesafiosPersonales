@@ -34,5 +34,13 @@ class ChallengesRepositoryImpl @Inject constructor(
             challengesApi.updateChallengeFieldsApi(id, fieldsToUpdate)
         }.mapLeft { it.toNetworkError() }
 
+    override suspend fun deleteChallenge(
+        id: String
+    ): Either<NetworkError, Unit> =
+        Either.catch {
+            challengesApi.deleteChallenge(id)
+        }.mapLeft { it.toNetworkError() }
+
+
 
 }

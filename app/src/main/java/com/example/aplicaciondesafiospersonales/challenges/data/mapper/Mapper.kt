@@ -29,7 +29,7 @@ fun ApiResultEntity.toModel() =
                 amountFulfilled = it.amountFulfilled,
                 amountToBeFulfilled = it.amountToBeFulfilled,
                 startDate = it.startDate,
-                finishDate = it.finishDate
+                finishDate = it.finishDate,
             )
         }
     )

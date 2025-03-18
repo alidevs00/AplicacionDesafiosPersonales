@@ -4,6 +4,7 @@ import com.example.aplicaciondesafiospersonales.challenges.data.entity.ApiResult
 import com.example.aplicaciondesafiospersonales.challenges.domain.model.Challenge
 import com.example.aplicaciondesafiospersonales.challenges.domain.model.ChallengeUpdate
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
@@ -23,6 +24,11 @@ interface ChallengesApi {
     suspend fun updateChallengeFieldsApi(
         @Path("objectId") id: String,
         @Body fieldsToUpdate: ChallengeUpdate
+    )
+
+    @DELETE("classes/Desafio/{objectId}")
+    suspend fun deleteChallenge(
+        @Path("objectId") id: String,
     )
 
 }
